@@ -1,7 +1,8 @@
 import user from '../models/user.js'; 
 import bcrypt from 'bcrypt';
+import { errorHandler } from '../utils/error.js';
 
-export const userTest=async(req,res)=>{
+export const userTest=async(req,res,next)=>{
     try{
         let username=req.body.username;
         let email=req.body.email;
@@ -15,9 +16,10 @@ export const userTest=async(req,res)=>{
             await newUser.save();
             res.send('Hii I am a User');
         }
-        return res.status(404).json({message:'All are Required'});
+        next(errorHandler(404,"All Field are Required"));
+        return;
     }
     catch(err){
-        res.status(404).json({message:err.message});
+        next(err);
     }
 };
