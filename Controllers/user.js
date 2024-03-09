@@ -23,3 +23,7 @@ export const userTest=async(req,res,next)=>{
         next(err);
     }
 };
+
+export const homeRoute=(req,res)=>{
+    res.send('I am Home Route');
+}

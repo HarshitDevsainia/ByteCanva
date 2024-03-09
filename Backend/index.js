@@ -20,6 +20,7 @@ app.listen('3000',()=>{
 });
 
 app.use('/',userRoute);
+app.use('/',userRoute);
 
 app.use((err,req,res,next)=>{
     let statusCode=err.statusCode || 500;
