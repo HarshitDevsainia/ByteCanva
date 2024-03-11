@@ -4,6 +4,7 @@ import { errorHandler } from '../utils/error.js';
 
 export const userTest=async(req,res,next)=>{
     try{
+        console.log(req.body);
         let username=req.body.username;
         let email=req.body.email;
         let password=await bcrypt.hashSync(req.body.password,10);
@@ -14,7 +15,8 @@ export const userTest=async(req,res,next)=>{
                 password
             });
             await newUser.save();
-            res.send('Hii I am a User');
+            res.send({JSON , msg:'success signup'});
+            return;
         }
         next(errorHandler(404,"All Field are Required"));
         return;

@@ -3,6 +3,6 @@ import {userTest,homeRoute} from '../Controllers/user.js'
 const router=express.Router();
 
 router.get('/',homeRoute);
-router.post('/User',userTest);
+router.post('/signup',userTest);
 
 export default router;
