@@ -4,7 +4,6 @@ import { errorHandler } from '../utils/error.js';
 
 export const userTest=async(req,res,next)=>{
     try{
-        console.log(req.body);
         let username=req.body.username;
         let email=req.body.email;
         let password=await bcrypt.hashSync(req.body.password,10);

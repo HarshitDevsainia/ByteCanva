@@ -9,7 +9,7 @@ export default function Signup() {
     const navigate=useNavigate();
     function inputhandler(e) {
         setUserData({...userData,[e.target.id]:e.target.value.trim()});  
-        console.log(userData);      
+
     }
     async function handleSubmit(e) {
        e.preventDefault();
@@ -42,10 +42,10 @@ export default function Signup() {
     };
     return(
         <>
-          <div className="flex m-2 mt-5 flex-col md:flex-row items-center md:mt-20 ">
+          <div className="m-2 flex flex-col md:flex-row items-center md:my-10">
             <div className="w-full p-10 md:w-1/2 flex items-center justify-center">
              <div className="info">
-                <h2 className=" text-2xl font-bold">ByteCanvas</h2>
+                <h2 className=" text-2xl font-bold  satisfy-regular">ByteCanvas</h2>
                 <p>Sign Up to the ByteCanvas</p>
              </div>
             </div>
@@ -56,7 +56,7 @@ export default function Signup() {
                     <div className="mb-2 block">
                       <Label htmlFor="username" value="Your Username" />
                     </div>
-                    <TextInput id="username" type="text" placeholder="Enter Username"  shadow onChange={inputhandler} />
+                    <TextInput id="username" type="text" placeholder="Enter Username" required  shadow onChange={inputhandler} />
                   </div>
                   <div>
                     <div className="mb-2 block">
@@ -87,8 +87,8 @@ export default function Signup() {
                   <span>Have an Account ? </span>
                   <Link to={'/signin'} className=" text-blue-500">SignIn</Link>
                 </div>
-                 errorMsg!=null && 
-                 <Alert className="mt-5" color='failure'>{errorMsg}</Alert>
+                 {errorMsg!=null && 
+                 <Alert className="mt-5" color='failure'>{errorMsg}</Alert>}
               </div>
             </div>
           </div>

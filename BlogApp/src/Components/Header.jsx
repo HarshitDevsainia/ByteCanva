@@ -8,10 +8,10 @@ export default function Header() {
   let path=useLocation().pathname;
     return (
         <>
-           <Navbar>
+           <Navbar className='border-gray border-b-2'>
               <Link 
                 to={'/'}>
-                <span className='text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'>ByteCanvas</span>
+                <span className='rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2  satisfy-regular font-bold '>ByteCanvas</span>
               </Link>
               <form>
                   <TextInput
