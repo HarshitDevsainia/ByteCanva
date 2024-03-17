@@ -30,17 +30,16 @@ export const signupRoute=async(req,res,next)=>{
 //SignIn Route 
 
 export const signinRoute=async(req,res,next)=>{
-    let {username,password}=req.body;
-    if(!username || !password || password=='' || username==''){
+    let {email,password}=req.body;
+    if(!email || !password || password==='' || email===''){
         return next(errorHandler(404,'All Field are Required'));
     }
     try{
-        let Curruser = await user.findOne({username:username});
+        let Curruser = await user.findOne({email:email});
         let validatePassword = bcrypt.compareSync(password,Curruser.password);
         if(!validatePassword){
             return next(errorHandler(500,'Incorrect Password'));
         }
-        console.log(validatePassword);
         const token=jwt.sign({id: Curruser._id},process.env.JWT_SECRET);
         const {password:pass, ...rest} =Curruser._doc
         res.status(200).cookie('access_token', token,{

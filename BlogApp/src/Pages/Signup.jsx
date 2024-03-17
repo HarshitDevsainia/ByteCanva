@@ -8,8 +8,7 @@ export default function Signup() {
     let [loader,setLoder]=useState(false);
     const navigate=useNavigate();
     function inputhandler(e) {
-        setUserData({...userData,[e.target.id]:e.target.value.trim()});  
-
+      setUserData({...userData,[e.target.id]:e.target.value.trim()});  
     }
     async function handleSubmit(e) {
        e.preventDefault();
@@ -17,7 +16,7 @@ export default function Signup() {
         return setErrorMsg('Please fill All the Details');
        }
        else{
-            setErrorMsg(null);
+          setErrorMsg(null);
        }
        try {
             setLoder(true);
@@ -35,9 +34,9 @@ export default function Signup() {
             if(res.ok){
               navigate('/signin');
             }
-       } catch (error) {
-           setErrorMsg(error.message);
-           setLoder(false);
+        }catch (error) {
+          setErrorMsg(error.message);
+          setLoder(false);
        }
     };
     return(
