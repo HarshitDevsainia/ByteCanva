@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Button, Checkbox, Label, Spinner, TextInput } from 'flowbite-react';
 import {Link, useNavigate} from 'react-router-dom';
+import OAuth from "../Components/OAuth";
 
 export default function Signup() {
     let [userData,setUserData]=useState({});
@@ -81,6 +82,7 @@ export default function Signup() {
                     :'Sign Up'
                     }
                   </Button>
+                  <OAuth/>
                 </form>
                 <div className="mt-2">
                   <span>Have an Account ? </span>

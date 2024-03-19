@@ -21,6 +21,7 @@ app.listen('3000',()=>{
 
 app.use('/api',userRoute);
 app.use('/api/auth',userRoute);
+app.use('/api/auth',userRoute);
 
 app.use((err,req,res,next)=>{
     let statusCode=err.statusCode || 500;

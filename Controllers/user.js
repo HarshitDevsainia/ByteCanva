@@ -3,6 +3,47 @@ import bcrypt from 'bcrypt';
 import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
 
+
+export const google=async(req,res,next)=>{
+    let {name,email,googlePhoto}=req.body;
+    try{
+        const data=await user.findOne({email});
+        if(data!=null){
+          const token=jwt.sign(
+            {id:data._id},
+            process.env.JWT_SECRET
+          );
+          const {password,...rest}=data._doc;
+          res.status(200).cookie('access token',token, {
+            httpOnly:true,
+          }).json(rest);
+        }else{
+           const genratePassword=Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8);
+           console.log(genratePassword);
+           const hashedPassword=bcrypt.hashSync(genratePassword,10);
+           const newUser=new user({
+            username:name.toLowerCase().split(' ').join(''),
+            email:email,
+            password:hashedPassword,
+            profilePicture:googlePhoto,
+           });
+           await newUser.save();
+           const token=jwt.sign(
+            {id:newUser._id},
+            process.env.JWT_SECRET
+           );
+           const {password,...rest}=newUser._doc;
+           res.status(200).cookie('acess token',token,{
+            httpOnly:true,
+           }).json(rest);
+       }
+    }
+    catch(err){
+       next(err);
+       return;
+    }
+
+}
 //Sign Up Route
 export const signupRoute=async(req,res,next)=>{
     try{
