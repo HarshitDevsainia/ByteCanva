@@ -23,11 +23,10 @@ export default function Signup() {
             setLoder(true);
             const res=await fetch('/api/auth/signup',{
                 method:'Post',
-                headers:{'Content-Type':'application/json'},
+                headers:{'Content-Type':'Application/json'},
                 body: JSON.stringify(userData)
             });
             const data=await res.json();
-            console.log(data);
             if(data.success===false){
                setErrorMsg('Username Already Exist');
             }

@@ -8,18 +8,15 @@ export const google=async(req,res,next)=>{
     let {name,email,googlePhoto}=req.body;
     try{
         const data=await user.findOne({email});
-        if(data!=null){
-          const token=jwt.sign(
-            {id:data._id},
-            process.env.JWT_SECRET
-          );
-          const {password,...rest}=data._doc;
-          res.status(200).cookie('access token',token, {
+        if(data){
+          const token=jwt.sign({id:data._id},process.env.JWT_SECRET);
+          const {password:pass,...rest}=data._doc;
+          res.status(200).cookie('access_token',token, {
             httpOnly:true,
           }).json(rest);
+          return;
         }else{
            const genratePassword=Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8);
-           console.log(genratePassword);
            const hashedPassword=bcrypt.hashSync(genratePassword,10);
            const newUser=new user({
             username:name.toLowerCase().split(' ').join(''),
@@ -28,14 +25,12 @@ export const google=async(req,res,next)=>{
             profilePicture:googlePhoto,
            });
            await newUser.save();
-           const token=jwt.sign(
-            {id:newUser._id},
-            process.env.JWT_SECRET
-           );
-           const {password,...rest}=newUser._doc;
-           res.status(200).cookie('acess token',token,{
-            httpOnly:true,
+           const token=jwt.sign({id:newUser._id},process.env.JWT_SECRET);
+           const {password:pass,...rest}=newUser._doc;
+           res.status(200).cookie('access_token', token,{
+            httpOnly:true
            }).json(rest);
+           return;
        }
     }
     catch(err){
