@@ -1,93 +1,43 @@
-import user from '../models/user.js'; 
 import bcrypt from 'bcrypt';
+import user from '../models/user.js';
 import { errorHandler } from '../utils/error.js';
-import jwt from 'jsonwebtoken';
 
-
-export const google=async(req,res,next)=>{
-    let {name,email,googlePhoto}=req.body;
-    try{
-        const data=await user.findOne({email});
-        if(data){
-          const token=jwt.sign({id:data._id},process.env.JWT_SECRET);
-          const {password:pass,...rest}=data._doc;
-          res.status(200).cookie('access_token',token, {
-            httpOnly:true,
-          }).json(rest);
-          return;
-        }else{
-           const genratePassword=Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8);
-           const hashedPassword=bcrypt.hashSync(genratePassword,10);
-           const newUser=new user({
-            username:name.toLowerCase().split(' ').join(''),
-            email:email,
-            password:hashedPassword,
-            profilePicture:googlePhoto,
-           });
-           await newUser.save();
-           const token=jwt.sign({id:newUser._id},process.env.JWT_SECRET);
-           const {password:pass,...rest}=newUser._doc;
-           res.status(200).cookie('access_token', token,{
-            httpOnly:true
-           }).json(rest);
-           return;
-       }
+export const updateUser=async(req,res,next)=>{
+    if(req.user.id!=req.params.id){
+       return next(errorHandler(403,'You Are not Allow to update this user'));
     }
-    catch(err){
-       next(err);
-       return;
+    if(req.body.password){
+       if(req.body.password.length<6) return next(errorHandler(503,'Password Must at Least 6 Characters'));
+       req.body.password=bcrypt.hashSync(req.body.password,10);
     }
-
-}
-//Sign Up Route
-export const signupRoute=async(req,res,next)=>{
-    try{
-        let username=req.body.username;
-        let email=req.body.email;
-        let password=await bcrypt.hashSync(req.body.password,10);
-        if(username && email && req.body.password && username!='' && email!='' && req.body.password!=''){
-            const newUser=await new user({
-                username,
-                email,
-                password
-            });
-            await newUser.save();
-            res.send({JSON , msg:'success signup'});
-            return;
+    if(req.body.username){
+        if(req.body.username.length<7 || req.body.username.length>20){
+            return next(errorHandler(400,'Username Must be between 7 to 20 Character'));
         }
-        next(errorHandler(404,"All Field are Required"));
-        return;
+        if(req.body.username.includes(' ')){
+            return next(errorHandler(400,'Username Can Not Contains Space'));
+        }
+        if(req.body.username!=req.body.username.toLowerCase()){
+            return next(errorHandler(400,'username must be lowercases'));
+        }
+        if(req.body.username.match(/^[a-zA-Z0-9]+$/)){
+            return next(errorHandler(400,'username can only contain letter and Number spacial Character (^ , $)'));
+        }
+    }
+    try{
+        const updateuser=await user.findByIdAndUpdate(req.params.id,{
+            $set:{
+                username:req.body.username,
+                email:req.body.email,
+                profilePicture:req.body.profilePicture,
+                password:req.body.password
+            }
+        },{new:true}
+        );
+        const {password:pass,...rest}=updateuser._doc;
+        res.status(200).json(rest);
     }
     catch(err){
         next(err);
     }
-};
-
-//SignIn Route 
-
-export const signinRoute=async(req,res,next)=>{
-    let {email,password}=req.body;
-    if(!email || !password || password==='' || email===''){
-        return next(errorHandler(404,'All Field are Required'));
-    }
-    try{
-        let Curruser = await user.findOne({email:email});
-        let validatePassword = bcrypt.compareSync(password,Curruser.password);
-        if(!validatePassword){
-            return next(errorHandler(500,'Incorrect Password'));
-        }
-        const token=jwt.sign({id: Curruser._id},process.env.JWT_SECRET);
-        const {password:pass, ...rest} =Curruser._doc
-        res.status(200).cookie('access_token', token,{
-            httpOnly:true
-        }).json(rest);
-    }
-    catch(err){
-        return next(err);
-    }
-};
-
-
-export const homeRoute=(req,res)=>{
-    res.send('I am Home Route');
 }
