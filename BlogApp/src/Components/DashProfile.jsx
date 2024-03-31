@@ -9,7 +9,7 @@ import {updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSucces
 import {HiOutlineExclamationCircle} from 'react-icons/hi'
  
 export default function DashProfile() {
-  const {currUser , loading}=useSelector(state=>state.user);
+  const {currUser , error , loading}=useSelector(state=>state.user);
   const [imagefile,setImagefile]=useState(null);
   const [imagefileUrl,setImagefileUrl]=useState(null);
   const [ImageFileUploadError,setImageFileUploadError]=useState(null);
@@ -209,6 +209,7 @@ export default function DashProfile() {
       </div>
       {updateError && <Alert color={'failure'} className='mt-2'>{updateError}</Alert>}
       {updateSuccessMsg && <Alert color={'success'} className='mt-2'>{updateSuccessMsg}</Alert>}
+      {error && <Alert color={'failure'} className='mt-2'>{error}</Alert>}
       <Modal 
         show={showModel}
         onClose={()=>SetShowModel(false)}
