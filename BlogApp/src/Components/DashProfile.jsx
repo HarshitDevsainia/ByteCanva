@@ -5,7 +5,7 @@ import {getStorage,getDownloadURL,ref,uploadBytesResumable} from 'firebase/stora
 import {app} from '../firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import {updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSuccess, deleteUserFailure} from '../redux/user/userSlice.js';
+import {updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSuccess, deleteUserFailure,signOutUserSuccess} from '../redux/user/userSlice.js';
 import {HiOutlineExclamationCircle} from 'react-icons/hi'
  
 export default function DashProfile() {
@@ -19,6 +19,7 @@ export default function DashProfile() {
   const [updatedData,setUpdatedData]=useState({});
   const [updateSuccessMsg,setUpdateSuccessMsg]=useState(null);
   const [showModel,SetShowModel]=useState(false);
+  const [signoutError,setSignoutError]=useState(null);
   const filePickerRef=useRef();
   const dispatch=useDispatch();
 
@@ -130,6 +131,26 @@ export default function DashProfile() {
       return;
     }
   }
+  async function handleSignOut () {
+    try{
+      let res=await fetch('/api/user/signout',{
+        method:'POST'
+      });
+      let data=res.json();
+      if(!res.ok){
+        setSignoutError(data.message);
+        return;
+      }
+      else{
+        dispatch(signOutUserSuccess());
+        return;
+      }
+    }
+    catch(err){
+      setSignoutError(err.message);
+      return;
+    }
+  }
 
   return (
     <div className=' max-w-lg p-3 mx-auto w-full'>
@@ -205,11 +226,12 @@ export default function DashProfile() {
       </form>
       <div className=" text-red-500 flex justify-between mt-5">
           <span className='cursor-pointer' onClick={()=>SetShowModel(true)}>Delete Account</span>
-          <span className='cursor-pointer'>Sign Out</span>
+          <span className='cursor-pointer' onClick={handleSignOut}>Sign Out</span>
       </div>
       {updateError && <Alert color={'failure'} className='mt-2'>{updateError}</Alert>}
       {updateSuccessMsg && <Alert color={'success'} className='mt-2'>{updateSuccessMsg}</Alert>}
       {error && <Alert color={'failure'} className='mt-2'>{error}</Alert>}
+      {signoutError && <Alert color={'failure'} className='mt-2'>{signoutError}</Alert>}
       <Modal 
         show={showModel}
         onClose={()=>SetShowModel(false)}

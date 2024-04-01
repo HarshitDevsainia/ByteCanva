@@ -5,6 +5,7 @@ import {AiOutlineSearch} from 'react-icons/ai';
 import { FaMoon, FaSun } from "react-icons/fa";
 import {useDispatch, useSelector} from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
+import {signOutUserSuccess} from '../redux/user/userSlice.js';
 
 
 
@@ -13,8 +14,23 @@ export default function Header() {
   const {currUser}=useSelector(state=>state.user);
   const {theme}=useSelector(state=>state.theme);
   const dispatch = useDispatch();
-  function handleSignout() {
-    console.log('You Sign Out');
+   async function handleSignout() {
+    try{
+      const res=await fetch('/api/user/signout',{
+        method:'POST'
+      });
+      let data=await res.json();
+      if(!res.ok){
+        throw data.message;
+      }
+      else{
+        dispatch(signOutUserSuccess());
+        return;
+      }
+    }
+    catch(err){
+      console.log(err);
+    }
   }
     return (
         <>
