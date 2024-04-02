@@ -9,7 +9,7 @@ export const google=async(req,res,next)=>{
     try{
         const data=await user.findOne({email});
         if(data){
-          const token=jwt.sign({id:data._id},process.env.JWT_SECRET);
+          const token=jwt.sign({id:data._id , isAdmin:data.isAdmin},process.env.JWT_SECRET);
           const {password:pass,...rest}=data._doc;
           res.status(200).cookie('access_token',token, {
             httpOnly:true,
@@ -25,7 +25,7 @@ export const google=async(req,res,next)=>{
             profilePicture:googlePhoto,
            });
            await newUser.save();
-           const token=jwt.sign({id:newUser._id},process.env.JWT_SECRET);
+           const token=jwt.sign({id:newUser._id , isAdmin:newUser.isAdmin},process.env.JWT_SECRET);
            const {password:pass,...rest}=newUser._doc;
            res.status(200).cookie('access_token', token,{
             httpOnly:true
@@ -76,7 +76,7 @@ export const signinRoute=async(req,res,next)=>{
         if(!validatePassword){
             return next(errorHandler(500,'Incorrect Password'));
         }
-        const token=jwt.sign({id: Curruser._id},process.env.JWT_SECRET);
+        const token=jwt.sign({id: Curruser._id , isAdmin:Curruser.isAdmin},process.env.JWT_SECRET);
         const {password:pass, ...rest} =Curruser._doc
         res.status(200).cookie('access_token', token,{
             httpOnly:true
