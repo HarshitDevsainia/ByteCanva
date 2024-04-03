@@ -9,6 +9,8 @@ import Project from './Pages/Project';
 import Header from './Components/Header';
 import FooterCom from './Components/FooterCom'
 import PrivateRoute from './Components/PrivateRoute';
+import AdminPrivateRoute from './Components/AdminPrivateRoute';
+import CreatePost from './Components/CreatePost';
 
 function App() {
   return (
@@ -24,6 +26,9 @@ function App() {
                 <Route path='/DashBoard' element={<DashBoard/>} /> 
              </Route>
              <Route path='/Project' element={<Project/>} /> 
+             <Route element={<AdminPrivateRoute/>}>
+                <Route path='/create-post' element={<CreatePost/>}/>
+             </Route>
           </Routes>
           <FooterCom/>
       </BrowserRouter>

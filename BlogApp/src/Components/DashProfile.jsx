@@ -6,7 +6,8 @@ import {app} from '../firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSuccess, deleteUserFailure,signOutUserSuccess} from '../redux/user/userSlice.js';
-import {HiOutlineExclamationCircle} from 'react-icons/hi'
+import {HiOutlineExclamationCircle} from 'react-icons/hi';
+import {Link} from 'react-router-dom'
  
 export default function DashProfile() {
   const {currUser , error , loading}=useSelector(state=>state.user);
@@ -224,6 +225,16 @@ export default function DashProfile() {
              ): 'Update'}
           </Button>
       </form>
+      {currUser.isAdmin && (
+        <Link to={'/create-post'}>
+            <Button
+              type='button'
+              className='mt-3 w-full'
+              gradientDuoTone={'purpleToPink'}
+              outline
+            >Create a Post</Button>
+        </Link>
+      )}
       <div className=" text-red-500 flex justify-between mt-5">
           <span className='cursor-pointer' onClick={()=>SetShowModel(true)}>Delete Account</span>
           <span className='cursor-pointer' onClick={handleSignOut}>Sign Out</span>
