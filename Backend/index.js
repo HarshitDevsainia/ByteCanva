@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import authRoute from '../Routes/auth.js';
 import cookieParser from "cookie-parser";
 import userRoute from '../Routes/user.js';
+import postRoute from '../Routes/post.js';
 
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.listen('3000',()=>{
 
 app.use('/api/auth',authRoute);
 app.use('/api/user',userRoute);
+app.use('/api/post',postRoute);
 
 //error Handling MiddleWare
 app.use((err,req,res,next)=>{
