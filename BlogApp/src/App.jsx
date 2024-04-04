@@ -10,7 +10,7 @@ import Header from './Components/Header';
 import FooterCom from './Components/FooterCom'
 import PrivateRoute from './Components/PrivateRoute';
 import AdminPrivateRoute from './Components/AdminPrivateRoute';
-import CreatePost from './Components/CreatePost';
+import CreatePost from './Pages/CreatePost';
 
 function App() {
   return (
