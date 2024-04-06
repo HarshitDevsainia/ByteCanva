@@ -6,6 +6,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import {useNavigate} from 'react-router-dom'
 
 
 export default function CreatePost() {
@@ -17,6 +18,7 @@ export default function CreatePost() {
     const [postData,setPostData]=useState({});
     const [createPostError,setCreatePostError]=useState(null);
     const [createPostSuccess,setCreatePostSuccess]=useState(null);
+    const navigate=useNavigate();
 
     function handleInput(e) {
         setPostData({...postData,[e.target.id]:e.target.value});
@@ -83,6 +85,7 @@ export default function CreatePost() {
             }
             else{
                 setCreatePostSuccess('Successfully created');
+                navigate('/');
                 return;
             }
         }
