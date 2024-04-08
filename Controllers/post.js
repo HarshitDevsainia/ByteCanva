@@ -22,8 +22,8 @@ export const create=async(req,res,next)=>{
 }
 
 export const getPost=async(req,res,next)=>{
-    const startIndex=parseInt(req.query.startIndex);
-    const limit=parseInt(req.query.limit);
+    const startIndex=parseInt(req.query.startIndex)||0;
+    const limit=parseInt(req.query.limit)||9;
     const sortDirection=req.query.order==='asc'?1:-1;
 
     const posts=await post.find({
@@ -52,4 +52,19 @@ export const getPost=async(req,res,next)=>{
         totalPosts,
         lastMonthPosts
     });
+}
+
+export const DeletePost=async(req,res,next)=>{
+    const postId=req.params.postId;
+    console.log(req.params);
+    if(!req.user.isAdmin || req.user.id!=req.params.userId){
+        return(next(errorHandler(400,'You are not allow to Delete the Post')));
+    }
+    try{
+        await post.findByIdAndDelete(postId);
+        res.status(200).json('Succuess Fully Deleted');
+    }
+    catch(err){
+        next(err);
+    }
 }
