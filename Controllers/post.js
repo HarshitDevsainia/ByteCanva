@@ -56,13 +56,31 @@ export const getPost=async(req,res,next)=>{
 
 export const DeletePost=async(req,res,next)=>{
     const postId=req.params.postId;
-    console.log(req.params);
     if(!req.user.isAdmin || req.user.id!=req.params.userId){
         return(next(errorHandler(400,'You are not allow to Delete the Post')));
     }
     try{
         await post.findByIdAndDelete(postId);
         res.status(200).json('Succuess Fully Deleted');
+    }
+    catch(err){
+        next(err);
+    }
+}
+export const updatePost=async(req,res,next)=>{
+    if(!req.user.isAdmin || req.params.userId!=req.user.id){
+        next(errorHandler(400,'You are not allowed to update the post'));
+    }
+    try{
+        const updatedPost=await post.findByIdAndUpdate(req.params.postId,{
+            $set:{
+               title:req.body.title,
+               category:req.body.category,
+               content:req.body.content,
+               image:req.body.image,
+            }
+        },{new:true});
+        res.status(200).json(updatedPost);
     }
     catch(err){
         next(err);

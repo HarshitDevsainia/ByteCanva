@@ -85,7 +85,7 @@ export default function DashPosts(){
                       </Table.HeadCell>
                    </Table.Head>
                    {post.map((data)=>(
-                      <Table.Body className="devide-y">
+                      <Table.Body className="devide-y" key={data._id}>
                         <Table.Row className=" bg-white dark:bg-gray-800 dark:border-gray-700">
                           <Table.Cell>{new Date(data.updatedAt).toLocaleDateString()}</Table.Cell>
                           <Table.Cell>
@@ -106,7 +106,7 @@ export default function DashPosts(){
                             </span>
                           </Table.Cell>
                           <Table.Cell>
-                            <Link to={`/update-post/${data.slug}`}>
+                            <Link to={`/update-post/${data._id}`}>
                                 <span className=" text-teal-500">Edit</span>
                             </Link>
                           </Table.Cell>

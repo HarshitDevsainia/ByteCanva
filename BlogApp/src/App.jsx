@@ -11,6 +11,7 @@ import FooterCom from './Components/FooterCom'
 import PrivateRoute from './Components/PrivateRoute';
 import AdminPrivateRoute from './Components/AdminPrivateRoute';
 import CreatePost from './Pages/CreatePost';
+import UpdatePost from './Pages/UpdatePost';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
              <Route path='/Project' element={<Project/>} /> 
              <Route element={<AdminPrivateRoute/>}>
                 <Route path='/create-post' element={<CreatePost/>}/>
+                <Route path='/update-post/:postId' element={<UpdatePost/>}/>
              </Route>
           </Routes>
           <FooterCom/>
