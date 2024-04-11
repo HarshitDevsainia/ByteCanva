@@ -65,3 +65,19 @@ export const signOut=async(req,res,next)=>{
         next(err);
     }
 }
+
+export const getUser=async (req,res,next)=>{
+    if(!req.user.isAdmin){
+        next(errorHandler(400,'Your Are not Allowed to get the User Data'));
+    }
+    try{
+        const startIndex=req.query.startIndex || 0;
+        const limit =req.query.limit || 9;
+        const sortDirection=req.query.sort==='asc'?+1:-1;
+        const users=await user.find().sort({createdAt:sortDirection}).skip(startIndex).limit(limit);
+        res.status(200).send(users);
+    }
+    catch(err){
+        next(err);
+    }
+}
