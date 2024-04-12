@@ -44,7 +44,7 @@ export const updateUser=async(req,res,next)=>{
 
 export const deleteUser=async(req,res,next)=>{
     const id=req.params.id;
-    if(req.user.id!=id){
+    if(!req.user.isAdmin && req.user.id!=id){
         next(errorHandler(400,'You are not allowed to delete this user'));
         return;
     }
@@ -71,11 +71,27 @@ export const getUser=async (req,res,next)=>{
         next(errorHandler(400,'Your Are not Allowed to get the User Data'));
     }
     try{
-        const startIndex=req.query.startIndex || 0;
-        const limit =req.query.limit || 9;
+        const startIndex=parseInt(req.query.startIndex) || 0;
+        const limit=parseInt(req.query.limit) || 9;
         const sortDirection=req.query.sort==='asc'?+1:-1;
         const users=await user.find().sort({createdAt:sortDirection}).skip(startIndex).limit(limit);
-        res.status(200).send(users);
+        const usersWithoutPassword=users.map((user)=>{
+            const {password,...rest}=user._doc;
+            return rest;
+        });
+        const now=new Date();
+        const oneMonthAgo=new Date(
+            now.getFullYear(),
+            now.getMonth()-1,
+            now.getDate()
+        );
+        const lastMonthUser=await user.countDocuments({createdAt:{$gt:oneMonthAgo}});
+        const totalUser=await user.countDocuments();
+        res.status(200).json({
+            users:usersWithoutPassword,
+            totalUser:totalUser,
+            lastMonthUser:lastMonthUser
+        });
     }
     catch(err){
         next(err);
