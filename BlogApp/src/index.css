@@ -13,3 +13,32 @@ body{
 .ql-editor{
     font-size: 1.05rem;
 }
+.post-Content p{
+    margin-bottom: 0.5rem;
+}
+.post-Content h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+}
+.post-Content h2{
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+}
+.post-Content h3{
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+}
+.post-Content a{
+    text-decoration: none;
+    color: rgb(73, 149, 199);
+}
+.dark.post-Content a{
+    text-decoration: none;
+    color: rgba(137, 194, 233, 0.801);
+}

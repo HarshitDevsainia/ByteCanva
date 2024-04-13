@@ -40,25 +40,25 @@ export default function DashSidebar(){
         <Sidebar.Items>
             <Sidebar.ItemGroup>
                 <Link to='/dashboard?tab=Profile'>
-                    <Sidebar.Item active={tab==='Profile'} icon={HiUser} label={currUser && currUser.isAdmin?('Admin'):('user')} labelColor="dark" as='div'>
+                    <Sidebar.Item className="mb-1" active={tab==='Profile'} icon={HiUser} label={currUser && currUser.isAdmin?('Admin'):('user')} labelColor="dark" as='div'>
                         Profile
                     </Sidebar.Item>
                 </Link>
                 {currUser.isAdmin && (
                     <>
                        <Link to='/dashboard?tab=Posts'>
-                           <Sidebar.Item active={tab==='Posts'} icon={HiDocumentText} labelColor="dark" as='div'>
+                           <Sidebar.Item active={tab==='Posts'} className="mb-1" icon={HiDocumentText} labelColor="dark" as='div'>
                                Posts
                             </Sidebar.Item>
                         </Link>
                         <Link to='/dashboard?tab=Users'>
-                            <Sidebar.Item active={tab==='Users'} icon={HiUserGroup} labelColor='dark' as='div'>
+                            <Sidebar.Item className="mb-1"  active={tab==='Users'} icon={HiUserGroup} labelColor='dark' as='div'>
                                 Users
                             </Sidebar.Item>
                         </Link>
                     </>
                 )}
-                <Sidebar.Item icon={HiArrowSmRight}  labelColor="dark" onClick={handleSignOut}>
+                <Sidebar.Item icon={HiArrowSmRight} className="mb-1" labelColor="dark" onClick={handleSignOut}>
                     SignOut
                 </Sidebar.Item>
             </Sidebar.ItemGroup>
