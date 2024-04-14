@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import {useParams ,Link} from 'react-router-dom';
 import {Button, Spinner} from 'flowbite-react'
+import CallToAction from "../Components/CallToAction";
 
 
 export default function PostPage() {
@@ -49,12 +50,15 @@ export default function PostPage() {
                     <Button color="gray" size={'xs'} pill>{currPost && currPost.category}</Button>
                 </Link>
                 <img src={`${currPost && currPost.image}`} alt={`${currPost && currPost.title}`} 
-                className=" p-3 mt-10 mx-auto w-full md:max-w-3xl object-cover max-h-[600px]:"/>
+                className=" rounded-lg  mt-10 mx-auto w-full md:max-w-3xl object-cover max-h-[500px] "/>
                 <div className="flex justify-between w-full md:max-w-3xl mx-auto  items-center p-3 border-b border-slate-300">
                     <span>{currPost && new Date(currPost.createdAt).toLocaleDateString()}</span>
-                    <span>{currPost && (currPost.content.length/1000).toFixed(0)}mins read</span>
+                    <span>{currPost && (currPost.content.length/1000).toFixed(0)} mins read</span>
                 </div>
                 <div className=" p-8 max-w-2xl mx-auto w-full post-Content" dangerouslySetInnerHTML={{__html:currPost && currPost.content}}></div>
+                <div className="mx-auto max-w-3xl w-full">
+                    <CallToAction/>
+                </div>
            </main>
         </>
     )
