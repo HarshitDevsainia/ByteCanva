@@ -5,6 +5,7 @@ import authRoute from '../Routes/auth.js';
 import cookieParser from "cookie-parser";
 import userRoute from '../Routes/user.js';
 import postRoute from '../Routes/post.js';
+import commentRoute from '../Routes/comment.js';
 
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.listen('3000',()=>{
 app.use('/api/auth',authRoute);
 app.use('/api/user',userRoute);
 app.use('/api/post',postRoute);
+app.use('/api/comment',commentRoute);
 
 //error Handling MiddleWare
 app.use((err,req,res,next)=>{

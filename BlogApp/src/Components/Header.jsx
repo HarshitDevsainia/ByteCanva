@@ -14,7 +14,7 @@ export default function Header() {
   const {currUser}=useSelector(state=>state.user);
   const {theme}=useSelector(state=>state.theme);
   const dispatch = useDispatch();
-   async function handleSignout() {
+  async function handleSignout() {
     try{
       const res=await fetch('/api/user/signout',{
         method:'POST'

@@ -66,7 +66,7 @@ export const signOut=async(req,res,next)=>{
     }
 }
 
-export const getUser=async (req,res,next)=>{
+export const getUsers=async (req,res,next)=>{
     if(!req.user.isAdmin){
         next(errorHandler(400,'Your Are not Allowed to get the User Data'));
     }
@@ -92,6 +92,16 @@ export const getUser=async (req,res,next)=>{
             totalUser:totalUser,
             lastMonthUser:lastMonthUser
         });
+    }
+    catch(err){
+        next(err);
+    }
+}
+export const getUser=async(req,res,next)=>{
+    try{
+        const currUser=await user.findById(req.params.userId);
+        const {password:pass,...rest}=currUser._doc;
+        res.status(200).json(rest);
     }
     catch(err){
         next(err);

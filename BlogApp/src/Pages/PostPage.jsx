@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import {useParams ,Link} from 'react-router-dom';
 import {Button, Spinner} from 'flowbite-react'
 import CallToAction from "../Components/CallToAction";
+import CommentSection from "../Components/CommentSection";
 
 
 export default function PostPage() {
@@ -34,7 +35,7 @@ export default function PostPage() {
         }
         if(postSlug)fetchData();
     },[postSlug]);
-    console.log(currPost);
+
     if(postLoading){
         return(
             <div className="min-h-screen flex items-center justify-center">
@@ -58,6 +59,9 @@ export default function PostPage() {
                 <div className=" p-8 max-w-2xl mx-auto w-full post-Content" dangerouslySetInnerHTML={{__html:currPost && currPost.content}}></div>
                 <div className="mx-auto max-w-3xl w-full">
                     <CallToAction/>
+                </div>
+                <div className="mx-auto max-w-3xl w-full">
+                    {currPost && <CommentSection postId={currPost._id}/>}
                 </div>
            </main>
         </>
