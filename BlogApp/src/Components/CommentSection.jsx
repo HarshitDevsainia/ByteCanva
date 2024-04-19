@@ -3,12 +3,13 @@ import {useSelector} from 'react-redux';
 import { Link } from "react-router-dom";
 import {Button, Textarea} from 'flowbite-react';
 import Comments from "./Comments";
+import { useNavigate } from "react-router-dom";
 
 export default function CommentSection(postID) {
     const {currUser}=useSelector(state=>state.user);
     const [comment ,setComment]=useState('');
     const [allComments,setAllComments]=useState([]);
-
+    const navigate=useNavigate();
     //For geting All Comment
     useEffect(()=>{
         const fetchComment=async()=>{
@@ -56,6 +57,40 @@ export default function CommentSection(postID) {
         console.log(err);
       }
     }
+    async function handleLike(commentId) {
+      if(!currUser){
+        navigate('/signup');
+        return;
+      }
+      try{
+          const res=await fetch(`/api/comment/likeComment/${commentId}`,{
+            method:"PUT"
+          });
+          const data=await res.json();
+          // console.log(data);
+          if(res.ok){
+            setAllComments(allComments.map((comment)=>
+              commentId===comment._id?{
+                ...comment,
+                likes:data.likes,
+                numberOfLike:data.likes.length,
+              }:comment
+            ));      
+          }
+          else{
+            console.log(data.message);
+            return;
+          }
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+    function handleEdit(commentId,editContent) {
+      setAllComments(allComments.map((currComment)=>
+          commentId===currComment._id?{...currComment,content:editContent}:currComment
+    ));
+    }
     return(
       <div className="max-w-3xl">
         {currUser ?(
@@ -87,7 +122,7 @@ export default function CommentSection(postID) {
                       <div className="border-2 border-gray-400 py-1 px-2 rounded-sm">{allComments.length}</div>
                     </div>
                     {allComments.map((currComment)=>(
-                        <Comments comment={currComment}/>
+                        <Comments key={currComment._id} comment={currComment} onLike={handleLike} onEdit={handleEdit}/>
                     ))}
                 </>)
                } 
