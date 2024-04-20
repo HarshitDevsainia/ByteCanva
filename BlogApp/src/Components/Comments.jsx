@@ -125,12 +125,12 @@ export default function Comments({comment,onLike,onEdit,onDelete}) {
                             <>
                             <button 
                                type="button" 
-                               className="text-blue-500 text-sm text-medium"
+                               className="text-gray-400 hover:text-blue-500 text-sm font-medium"
                                onClick={()=>setShowEdit(true)}
                             >Edit</button>
                             <button
                                type="button"
-                               className="text-sm font-medium text-red-400"
+                               className="text-sm font-medium text-gray-400 hover:text-blue-500"
                                onClick={()=>setShowModel(true)}
                             >Delete
                             </button>

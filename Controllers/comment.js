@@ -47,7 +47,6 @@ export const likeComment=async(req,res,next)=>{
 }
 
 export const editComment=async(req,res,next)=>{
-    console.log(req.body);
     try{
         const currComment=await comment.findById(req.params.commentId);
         if(!currComment){
