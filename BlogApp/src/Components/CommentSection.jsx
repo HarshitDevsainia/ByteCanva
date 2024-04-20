@@ -91,6 +91,9 @@ export default function CommentSection(postID) {
           commentId===currComment._id?{...currComment,content:editContent}:currComment
     ));
     }
+    async function handleDelete(commentId) {
+      setAllComments(allComments.filter((currComment)=>currComment._id!==commentId));
+    }
     return(
       <div className="max-w-3xl">
         {currUser ?(
@@ -122,7 +125,7 @@ export default function CommentSection(postID) {
                       <div className="border-2 border-gray-400 py-1 px-2 rounded-sm">{allComments.length}</div>
                     </div>
                     {allComments.map((currComment)=>(
-                        <Comments key={currComment._id} comment={currComment} onLike={handleLike} onEdit={handleEdit}/>
+                        <Comments key={currComment._id} comment={currComment} onLike={handleLike} onEdit={handleEdit} onDelete={handleDelete}/>
                     ))}
                 </>)
                } 

@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {FaThumbsUp} from 'react-icons/fa'
-import {Button, Textarea} from 'flowbite-react'
+import {Alert, Button, Modal, Textarea} from 'flowbite-react'
 import moment from 'moment';
+import {HiOutlineExclamationCircle} from 'react-icons/hi'
 import { errorHandler } from "../../../utils/error";
 
-export default function Comments({comment,onLike,onEdit}) {
+export default function Comments({comment,onLike,onEdit,onDelete}) {
     const [user,setUser]=useState({});
     const {currUser}=useSelector(state=>state.user);
     const [showEdit,setShowEdit]=useState(false);
     const [editContent,setEditContent]=useState(comment.content);
-    // console.log(currUser._id);
+    const [showModel,setShowModel]=useState(false);
+
     useEffect(()=>{
        const fetchUser=async()=>{
          try{
@@ -52,6 +54,28 @@ export default function Comments({comment,onLike,onEdit}) {
             console.log(err);
         }
     }
+    async function handleDelete() {
+        try{
+            setShowModel(false);
+            if(comment.userId!==currUser._id && !currUser.isAdmin){
+                return next(errorHandler(400,'You are not allow to delete this comment'));
+            }
+            const res=await fetch(`/api/comment/deleteComment/${comment._id}`,{
+                method:'DELETE'
+            });
+            const data=await res.json();
+            if(res.ok){
+                onDelete(comment._id);
+                return;
+            } 
+            else{
+                console.log(data.message);
+            }
+        }
+        catch(err){
+
+        }
+    }
     return(
         <>
             <div className="flex">
@@ -85,7 +109,7 @@ export default function Comments({comment,onLike,onEdit}) {
                                     Cancel</Button>
                             </div>
                        </div>
-                    ):(<p className="text-gray-500 pb-2">{comment.content}</p>)}
+                    ):(<p className="text-gray-600 dark:text-gray-300 pb-2">{comment.content}</p>)}
                     <div className="flex gap-2">
                         <button 
                            type="button"
@@ -98,14 +122,39 @@ export default function Comments({comment,onLike,onEdit}) {
                             {comment.numberOfLike>0 && comment.numberOfLike+" "+(comment.numberOfLike===1?'Like':'Likes')}
                         </p>
                         {currUser && (currUser._id === comment.userId || currUser.isAdmin) && 
+                            <>
                             <button 
                                type="button" 
                                className="text-blue-500 text-sm text-medium"
                                onClick={()=>setShowEdit(true)}
                             >Edit</button>
+                            <button
+                               type="button"
+                               className="text-sm font-medium text-red-400"
+                               onClick={()=>setShowModel(true)}
+                            >Delete
+                            </button>
+                            </>
                         }
                     </div>
                 </div>
+                <Modal
+                   show={showModel}
+                   size={'md'}
+                   onClose={()=>setShowModel(false)}
+                >
+                    <Modal.Header/>
+                    <Modal.Body>
+                        <div className="text-center">
+                            <HiOutlineExclamationCircle className="mb-4 h-14 w-14 mx-auto text-gray-500"/>
+                            <h3 className="text-center text-lg font-normal text-gray-500 mb-4">Are You sure you want to delete this comment!</h3>
+                            <div className="flex justify-center gap-4">
+                                <Button color="failure" onClick={handleDelete}>Yes,I'm sure</Button>
+                                <Button color="gray" onClick={()=>setShowModel(false)}>No,Cancel</Button>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                </Modal>
             </div>
         </>
     )

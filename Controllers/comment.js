@@ -64,3 +64,18 @@ export const editComment=async(req,res,next)=>{
         next(err);
     }
 }
+export const deleteComment=async(req,res,next)=>{
+    try{
+        const currComment=await comment.findById(req.params.commentId);
+        if(!currComment){
+            return next(errorHandler(400,'No Comment exist'));
+        }
+        if(req.user.id!==currComment.userId && !req.user.isAdmin){
+            return next(errorHandler(400,'You are not allow to delete this comment'));
+        }
+        await comment.findByIdAndDelete(req.params.commentId);
+        res.status(200).json('Successfully Deleted the Comment');
+    }catch(err){
+        next(err);
+    }
+}
