@@ -4,13 +4,14 @@ import {useParams ,Link} from 'react-router-dom';
 import {Button, Spinner} from 'flowbite-react'
 import CallToAction from "../Components/CallToAction";
 import CommentSection from "../Components/CommentSection";
-
+import PostCard from "../Components/PostCard";
 
 export default function PostPage() {
     const {postSlug}=useParams();
     const [currPost,setCurrPost]=useState(null);
     const [postError,setPostError]=useState(null);
     const [postLoading,setPostLoading]=useState(false);
+    const [recentPost,setRecentPost]=useState([]);
 
     useEffect(()=>{
         const fetchData=async()=>{
@@ -33,8 +34,25 @@ export default function PostPage() {
                 return;
             }
         }
-        if(postSlug)fetchData();
+        if(postSlug){
+            fetchData();
+        }
     },[postSlug]);
+
+    useEffect(()=>{
+        const fetchRecentPost=async()=>{
+            try{
+                const res=await fetch('/api/post/getPost?limit=3');
+                const data=await res.json();
+                if(res.ok)setRecentPost(data.posts);
+                else console.log(data.message);
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+        fetchRecentPost();
+    },[])
 
     if(postLoading){
         return(
@@ -62,6 +80,14 @@ export default function PostPage() {
                 </div>
                 <div className="mx-auto max-w-3xl w-full">
                     {currPost && <CommentSection postId={currPost._id}/>}
+                    <div className="">
+                        <h1 className="text-center text-xl">Recent Articles</h1>
+                        <div className="flex flex-wrap gap-2 mt-5 justify-center">
+                            {recentPost && recentPost.map((post)=>(
+                                <PostCard key={post._id} post={post}/>
+                            ))}
+                        </div>
+                    </div>
                 </div>
            </main>
         </>

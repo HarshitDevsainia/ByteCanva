@@ -80,7 +80,7 @@ export default function Comments({comment,onLike,onEdit,onDelete}) {
         <>
             <div className="flex">
                 <div className=" flex-shrink-0 mr-3">
-                    <img className="w-10 h-10 rounded-full bg-gray-200" src={`${user.profilePicture}`} alt={`${user.username}`} />
+                    <img className="w-10 h-10 border-2 border-gray-300 rounded-full bg-gray-200" src={`${user.profilePicture}`} alt={`${user.username}`} />
                 </div>
                 <div className="flex-1">
                     <div className="flex items-center mb-1">
