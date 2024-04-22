@@ -78,3 +78,29 @@ export const deleteComment=async(req,res,next)=>{
         next(err);
     }
 }
+
+export const getComments=async(req,res,next)=>{
+    try{
+       if(!req.user.isAdmin){
+           next(errorHandler(400,'You Are not Allow to get the Comments!'));
+           return;
+       }
+       const startIndex=parseInt(req.query.startIndex)||0;
+       const limit=parseInt(req.query.limit)||9;
+       const sortDirection= req.query.sortDirection==='desc'?-1:1;
+       const Comments=await comment.find().sort({createdAt:sortDirection}).skip(startIndex).limit(limit);
+       const totalComments=await comment.countDocuments();
+       const now=new Date();
+       const lastMonthDate=new Date(now.getFullYear(),now.getMonth()-1,now.getDate());
+       const lastMonthComment=await comment.find({createdAt:{$gt:lastMonthDate}});
+
+       res.status(200).json({
+        Comments,
+        totalComments,
+        lastMonthComment
+       })
+    }
+    catch(err){
+        next(err);
+    }
+}
