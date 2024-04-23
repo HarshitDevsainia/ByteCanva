@@ -128,13 +128,13 @@ export default function DashUser() {
                    show={showModel} 
                    onClose={()=>setShowModel(false)}
                    popup
-                   size={'sm'}
+                   size={'md'}
                 >
                     <Modal.Header/>
                     <Modal.Body>
                         <div className="text-center mb-5">
-                            <HiOutlineExclamationCircle className="h-12 w-12 text-gray-500 mx-auto mb-2"/>
-                            <h3 className=" text-lg font-medium text-gray-500">Are you sure you want to delete the user!</h3>
+                            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-500 mx-auto mb-2"/>
+                            <h3 className=" text-lg  text-gray-500">Are you sure you want to delete the user!</h3>
                         </div>
                         <div className="flex gap-4 justify-center">
                             <Button color="failure" onClick={handleDeleteUser}>Yes,I'm sure</Button>
