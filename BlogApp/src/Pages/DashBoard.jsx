@@ -6,6 +6,7 @@ import DashProfile from "../Components/DashProfile";
 import DashPosts from "../Components/DashPost";
 import DashUser from "../Components/DashUser";
 import DashComments from "../Components/DashComments";
+import DashBoardComp from "../Components/DashBoardComp";
 
 
 export default function DashBoard() {
@@ -28,6 +29,7 @@ export default function DashBoard() {
            {tab=='Posts' && <DashPosts/>}
            {tab=='Users' && <DashUser/>}
            {tab=='Comments' && <DashComments/>}
+           {tab=='Dash' && <DashBoardComp/>}
        </div>
     )
 }

@@ -92,7 +92,7 @@ export const getComments=async(req,res,next)=>{
        const totalComments=await comment.countDocuments();
        const now=new Date();
        const lastMonthDate=new Date(now.getFullYear(),now.getMonth()-1,now.getDate());
-       const lastMonthComment=await comment.find({createdAt:{$gt:lastMonthDate}});
+       const lastMonthComment=await comment.countDocuments({createdAt:{$gt:lastMonthDate}});
 
        res.status(200).json({
         Comments,
