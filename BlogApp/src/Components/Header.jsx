@@ -1,4 +1,4 @@
-import react from 'react'
+import react, { useEffect, useState } from 'react'
 import {Link ,useLocation} from 'react-router-dom';
 import {Navbar , NavbarCollapse, NavbarLink, NavbarToggle, TextInput,Button, Dropdown, Avatar} from 'flowbite-react';
 import {AiOutlineSearch} from 'react-icons/ai';
@@ -6,14 +6,34 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import {useDispatch, useSelector} from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
 import {signOutUserSuccess} from '../redux/user/userSlice.js';
-
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Header() {
   let path=useLocation().pathname;
+  const location=useLocation();
+  const [searchTerm,setSearchTerm]=useState('');
   const {currUser}=useSelector(state=>state.user);
   const {theme}=useSelector(state=>state.theme);
   const dispatch = useDispatch();
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+    const urlParams=new URLSearchParams(location.search);
+    const searchTermFromURL=urlParams.get('searchTerm');
+    if(searchTermFromURL){
+      setSearchTerm(searchTermFromURL);
+    } 
+  },[location.search]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const urlParams=new URLSearchParams(location.search);
+    urlParams.set('searchTerm',searchTerm);
+    const searchQuery=urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  }
+
   async function handleSignout() {
     try{
       const res=await fetch('/api/user/signout',{
@@ -39,12 +59,14 @@ export default function Header() {
                 to={'/'}>
                 <span className='rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2  satisfy-regular font-bold '>ByteCanvas</span>
               </Link>
-              <form>
+              <form onSubmit={handleSubmit}>
                   <TextInput
                     type='text'
                     placeholder='Search..'
                     rightIcon={AiOutlineSearch}
                     className='hidden lg:inline'
+                    onChange={(e)=>setSearchTerm(e.target.value)}
+                    value={searchTerm}
                   ></TextInput>
               </form>
               <Button className='w-12 h-10 lg:hidden' color='gray' pill>

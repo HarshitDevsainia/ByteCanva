@@ -14,6 +14,7 @@ import CreatePost from './Pages/CreatePost';
 import UpdatePost from './Pages/UpdatePost';
 import PostPage from './Pages/PostPage';
 import ScrollToTop from './Components/ScrollToTop';
+import Search from './Pages/Search';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path='/update-post/:postId' element={<UpdatePost/>}/>
              </Route>
              <Route path='/posts/:postSlug' element={<PostPage/>}/>
+             <Route path='/search' element={<Search/>}/>
           </Routes>
           <FooterCom/>
       </BrowserRouter>
