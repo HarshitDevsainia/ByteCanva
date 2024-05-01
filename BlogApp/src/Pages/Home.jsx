@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CallToAction from '../Components/CallToAction'
 import { useEffect } from "react";
-import PostCard from '../Components/PostCard'
+import PostCard from '../Components/PostCard';
+import { Typewriter } from 'react-simple-typewriter'
 
 export default function Home() {
   const [posts,setPosts]=useState([]);
@@ -29,11 +30,13 @@ export default function Home() {
         <>
           <div className="">
             <div className="flex flex-col gap-6 p-28 max-w-6xl mx-auto">
-                <h1 className="text-3xl font-bold lg:text-6xl">Welcome to ByteCanva</h1>
-                <p className="text-xs text-gray-500 sm:text-sm">your go-to destination for all things web-related! Dive into a world of insightful blog posts   crafted to enrich your knowledge and inspire your digital journey. Whether you're a seasoned   developer, a curious beginner, or simply passionate about the web, you'll find a treasure trove of  articles waiting to be explored. Join our community today and embark on a learning adventure with ByteCanva!</p>
+                <h1 className="text-3xl font-bold lg:text-6xl h-15">
+                  W<Typewriter words={["elcome to ByteCanva"]} loop/>
+                </h1>
+                <p className="text-xs text-gray-500 sm:text-sm">Your go-to destination for all things web-related! Dive into a world of insightful blog posts   crafted to enrich your knowledge and inspire your digital journey. Whether you're a seasoned   developer, a curious beginner, or simply passionate about the web, you'll find a treasure trove of  articles waiting to be explored. Join our community today and embark on a learning adventure with ByteCanva!</p>
                 <Link to={'/search'} className="text-teal-500 text-xs sm:text-sm font-bold hover:underline">View all Posts</Link>
             </div>
-            <div className="p-3 bg-amber-100 dark:bg-slate-700">
+            <div className="p-3 bg-blue-100 dark:bg-slate-700">
                 <CallToAction/>
             </div>
             <div className="w-full flex flex-wrap p-2 gap-2 items-center justify-center py-7">

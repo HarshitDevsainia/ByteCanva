@@ -127,10 +127,10 @@ export default function Search(){
                 </form>
             </div>
             <div className="flex flex-col w-full">
-                <div className="border-b border-gray-500">
-                    <h1 className="text-2xl p-5 font-semibold">Post Result:</h1>
+                <div className="text-center">
+                    <h1 className="text-2xl p-5 font-semibold font-serif">Posts</h1>
                 </div>
-                <div className="p-5 flex flex-wrap gap-5">
+                <div className="p-5 flex flex-wrap gap-5 items-center justify-center">
                     {!loading && posts.length===0 && <p className="text-xl text-gray-500">No post yet Available</p>}
                     {loading && <p className="text-lg font-normal text-gray-500">Loading.....</p>}
                     {!loading && posts.length>0 && posts.map((post)=>(
