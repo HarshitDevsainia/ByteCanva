@@ -13,7 +13,7 @@ export const google=async(req,res,next)=>{
           const {password:pass,...rest}=data._doc;
           res.status(200).cookie('access_token',token, {
             httpOnly:true,
-          }).json(rest);
+          },{exp: Math.floor(Date.now() / 1000) + (60 * 60)}).json(rest);
           return;
         }else{
            const genratePassword=Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8);
@@ -29,7 +29,7 @@ export const google=async(req,res,next)=>{
            const {password:pass,...rest}=newUser._doc;
            res.status(200).cookie('access_token', token,{
             httpOnly:true
-           }).json(rest);
+           },{exp: Math.floor(Date.now() / 1000) + (60 * 60)}).json(rest);
            return;
        }
     }
@@ -80,7 +80,7 @@ export const signinRoute=async(req,res,next)=>{
         const {password:pass, ...rest} =Curruser._doc
         res.status(200).cookie('access_token', token,{
             httpOnly:true
-        }).json(rest);
+        },{exp: Math.floor(Date.now() / 1000) + (60 * 60)}).json(rest);
     }
     catch(err){
         return next(err);
