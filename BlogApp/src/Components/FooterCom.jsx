@@ -15,22 +15,24 @@ export default function FooterCom() {
                   <div className='m-3'>
                     <Footer.Title title='about'/>
                     <Footer.LinkGroup col>
-                      <Footer.Link>100 JS Projects</Footer.Link>
-                      <Footer.Link>ByteCanva Blog</Footer.Link>
+                      <Footer.Link href='https://www.geeksforgeeks.org/top-javascript-projects/'>Top JS Projects</Footer.Link>
+                      <Footer.Link href='http://localhost:5173/'>ByteCanva Blog</Footer.Link>
                     </Footer.LinkGroup>
                   </div>
                   <div className='m-3'>
                     <Footer.Title title='follow us'/>
                     <Footer.LinkGroup col>
-                      <Footer.Link href='https//github.com/HarshitDevsania'>Github</Footer.Link>
-                      <Footer.Link href='#'>DisCord</Footer.Link>
+                      <Footer.Link>
+                        <Link to={'https://github.com/HarshitDevsainia/ByteCanva'} target='_blank' rel="noopener noreferrer" >Github</Link>
+                      </Footer.Link>
+                      <Footer.Link href='https://discord.com/' target='_blank' rel="noopener noreferrer">DisCord</Footer.Link>
                     </Footer.LinkGroup>
                   </div>
                   <div className='m-3'>
                     <Footer.Title title='legel'/>
                     <Footer.LinkGroup col>
-                      <Footer.Link href='#'>Privacy & Policy</Footer.Link>
-                      <Footer.Link href='#'>Terms & Conditions</Footer.Link>
+                      <Footer.Link href='/'>Privacy & Policy</Footer.Link>
+                      <Footer.Link href='/'>Terms & Conditions</Footer.Link>
                     </Footer.LinkGroup>
                   </div>
                 </div>
@@ -42,11 +44,11 @@ export default function FooterCom() {
                   by='ByteCanva Blog'
                   year={new Date().getFullYear()}/>
                   <div className="flex gap-6 sm:mt-0 mt-4 sm:justify-center">
-                   <Footer.Icon href='' icon={BsFacebook}/>
-                   <Footer.Icon href='' icon={BsInstagram}/>
-                   <Footer.Icon href='' icon={BsTwitter}/>
-                   <Footer.Icon href='' icon={BsGithub}/>
-                   <Footer.Icon href='' icon={BsDribbble}/>
+                   <Footer.Icon href='https://www.facebook.com/' icon={BsFacebook}/>
+                   <Footer.Icon href='https://www.instagram.com/' icon={BsInstagram}/>
+                   <Footer.Icon href='https://twitter.com/' icon={BsTwitter}/>
+                   <Footer.Icon href='https://github.com/HarshitDevsainia/ByteCanva' target='_blank' rel="noopener noreferrer" icon={BsGithub}/>
+                   <Footer.Icon href='https://dribbble.com/' icon={BsDribbble}/>
                   </div>
                 </div>
             </div>

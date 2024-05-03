@@ -30,7 +30,7 @@ export default function Home() {
         <>
           <div className="">
             <div className="flex flex-col gap-6 p-28 max-w-6xl mx-auto">
-                <h1 className="text-3xl font-bold lg:text-6xl h-15">
+                <h1 className="text-3xl font-bold md:h-14 lg:text-6xl h-32">
                   W<Typewriter words={["elcome to ByteCanva"]} loop/>
                 </h1>
                 <p className="text-xs text-gray-500 sm:text-sm">Your go-to destination for all things web-related! Dive into a world of insightful blog posts   crafted to enrich your knowledge and inspire your digital journey. Whether you're a seasoned   developer, a curious beginner, or simply passionate about the web, you'll find a treasure trove of  articles waiting to be explored. Join our community today and embark on a learning adventure with ByteCanva!</p>
