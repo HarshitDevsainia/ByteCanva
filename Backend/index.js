@@ -1,11 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
-import authRoute from '../Routes/auth.js';
+import authRoute from './Routes/auth.js';
 import cookieParser from "cookie-parser";
-import userRoute from '../Routes/user.js';
-import postRoute from '../Routes/post.js';
-import commentRoute from '../Routes/comment.js';
+import userRoute from './Routes/user.js';
+import postRoute from './Routes/post.js';
+import commentRoute from './Routes/comment.js';
 import path from 'path';
 
 
