@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon Backend/index.js",
     "start": "node Backend/index.js",
-    "build": "npm install && npm install --prefix client && npm run build --prefix client"
+    "build": "npm install && npm install --prefix BlogApp && npm run build --prefix BlogApp"
   },
   "keywords": [],
   "author": "",
