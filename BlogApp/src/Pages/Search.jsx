@@ -138,7 +138,7 @@ export default function Search(){
                             )
                         )
                     }
-                    {showMore && posts.length>0 && <button className="text-lg text-teal-400 p-7 w-full hover:underline" onClick={handleShowMore}>Show More</button>}
+                    {!loading && showMore && posts.length>0 && <button className="text-lg text-teal-400 p-7 w-full hover:underline" onClick={handleShowMore}>Show More</button>}
                 </div>
             </div>
         </div>
