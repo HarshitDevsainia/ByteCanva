@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import userRoute from '../Routes/user.js';
 import postRoute from '../Routes/post.js';
 import commentRoute from '../Routes/comment.js';
+import path from 'path';
 
 
 dotenv.config();
@@ -19,6 +20,8 @@ mongoose.connect(process.env.URL)
 
 
 const app=express();
+const __dirname=path.resolve();
+app.use(express.static(path.join(__dirname,'/BlogApp/dist')))
 app.use(express.json());
 app.use(cookieParser());
 
@@ -30,6 +33,10 @@ app.use('/api/auth',authRoute);
 app.use('/api/user',userRoute);
 app.use('/api/post',postRoute);
 app.use('/api/comment',commentRoute);
+
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'BlogApp','dist','index.html'));
+});
 
 //error Handling MiddleWare
 app.use((err,req,res,next)=>{
