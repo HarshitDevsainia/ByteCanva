@@ -5,7 +5,6 @@ import {FaThumbsUp} from 'react-icons/fa'
 import {Alert, Button, Modal, Textarea} from 'flowbite-react'
 import moment from 'moment';
 import {HiOutlineExclamationCircle} from 'react-icons/hi'
-import { errorHandler } from "../../../utils/error";
 
 export default function Comments({comment,onLike,onEdit,onDelete}) {
     const [user,setUser]=useState({});
@@ -58,7 +57,8 @@ export default function Comments({comment,onLike,onEdit,onDelete}) {
         try{
             setShowModel(false);
             if(comment.userId!==currUser._id && !currUser.isAdmin){
-                return next(errorHandler(400,'You are not allow to delete this comment'));
+                console.log('You are not allow to delete this comment');
+                return;
             }
             const res=await fetch(`/api/comment/deleteComment/${comment._id}`,{
                 method:'DELETE'
